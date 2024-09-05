@@ -1,7 +1,6 @@
 import React from "react";
 
 import InfoModal from "../modals/InfoModal";
-import './Header.css'; // Assuming you have a CSS file for styling
 import STATIC_GAME_HEADER from "../../../public/static/sample_game_1.json";
 
 function Header() {
