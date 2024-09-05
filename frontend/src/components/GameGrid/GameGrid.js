@@ -32,7 +32,15 @@ export function SolvedWordRow({ ...props }) {
   const color = `${DIFFICULTY_COLOR_MAP[props.difficulty]}`;
 
   const [hasBeenClicked, setHasBeenClicked] = React.useState(false);
+  function getExplanationByCategory(category) {
+      // Find the category object
+      const categoryObj = React.useContext(PuzzleDataContext).gameData.find(item => item.category === category);
+      
+      // Return the explanation if found, otherwise return a message
+      return categoryObj ? categoryObj.explanation : "Category not found";
+  }
 
+  const explanation = getExplanationByCategory(props.category);
   const springProps = useSpring({
     from: {
       opacity: 0,
@@ -45,7 +53,7 @@ export function SolvedWordRow({ ...props }) {
     delay: 250,
   });
   // if there is an image available render it as a popover
-  const isImageAvailable = props.imageSrc != null;
+  const isImageAvailable = true;
   return (
     <animated.div style={springProps}>
       {!isImageAvailable ? (
@@ -63,7 +71,7 @@ export function SolvedWordRow({ ...props }) {
             >
               {!hasBeenClicked && (
                 <Badge className="animate-pulse absolute top-0 right-0 mr-2 mt-2">
-                  View More
+                  View Instructor Explanation
                 </Badge>
               )}
               <p className="font-bold pt-2 pl-4">{props.category}</p>
@@ -72,7 +80,7 @@ export function SolvedWordRow({ ...props }) {
           </PopoverTrigger>
           <PopoverContent>
             <div>
-              <img src={props.imageSrc} />
+              <p className="font-bold pt-2 pl-4">{explanation}</p>
             </div>
           </PopoverContent>
         </Popover>

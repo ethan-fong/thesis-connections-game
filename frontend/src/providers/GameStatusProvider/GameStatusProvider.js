@@ -37,6 +37,7 @@ function GameStatusProvider({ children }) {
     }
 
     if (Array.isArray(loadedState?.solvedGameData)) {
+      console.log("loaded gamestate", loadedState.solvedGameData);
       return loadedState.solvedGameData;
     }
     return [];
@@ -55,6 +56,7 @@ function GameStatusProvider({ children }) {
       setIsGameWon(true);
     }
     const gameState = { submittedGuesses, solvedGameData, gameData };
+    console.log("gamestate", gameState);
     saveGameStateToLocalStorage(gameState);
   }, [solvedGameData]);
 
@@ -65,6 +67,7 @@ function GameStatusProvider({ children }) {
       setIsGameWon(false);
     }
     const gameState = { submittedGuesses, solvedGameData, gameData };
+    console.log("gamestate", gameState);
     saveGameStateToLocalStorage(gameState);
   }, [submittedGuesses]);
 

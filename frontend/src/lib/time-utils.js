@@ -11,6 +11,7 @@ import {
 import queryString from "query-string";
 
 import { CONNECTION_GAMES } from "./data";
+import STATIC_GAME from "../../public/static/sample_game_1.json";
 
 export const getToday = () => startOfToday();
 export const getYesterday = () => startOfYesterday();
@@ -54,7 +55,8 @@ export const getPuzzleOfDay = (index) => {
   if (index < 0) {
     throw new Error("Invalid index");
   }
-
+  console.log("static game", STATIC_GAME)
+  return STATIC_GAME.game
   return CONNECTION_GAMES[index % CONNECTION_GAMES.length];
 };
 

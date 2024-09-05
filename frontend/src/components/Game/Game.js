@@ -17,6 +17,7 @@ import ViewResultsModal from "../modals/ViewResultsModal";
 function Game() {
   const { gameData, categorySize, numCategories } =
     React.useContext(PuzzleDataContext);
+  console.log("Context Values:", { gameData, categorySize, numCategories });
   const { submittedGuesses, solvedGameData, isGameOver, isGameWon } =
     React.useContext(GameStatusContext);
 

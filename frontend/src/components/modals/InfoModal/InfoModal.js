@@ -53,14 +53,13 @@ function InfoModal() {
             <AccordionItem value="item-1">
               <AccordionTrigger>Who Are Y'all?</AccordionTrigger>
               <AccordionContent>
-                This project is brought to you by andcomputers, feel free to
-                subscribe to our writing and other experiments.{" "}
+                This project is adapted from a project by andcomputers, edited by Ethan Fong.{" "}
                 <a
                   href="https://andcomputers.io/"
                   target="_blank"
                   className="underline font-bold"
                 >
-                  Check out our writing here.
+                  Original link.
                 </a>
               </AccordionContent>
             </AccordionItem>
@@ -80,30 +79,8 @@ function InfoModal() {
                     </a>
                   </li>
                   <li>
-                    <p className="mt-2 mb-1">Help us pay for servers & time:</p>
+                    <p className="mt-2 mb-1">Hi!</p>
                     <ul>
-                      <li>
-                        {" "}
-                        - One-time contribution via{" "}
-                        <a
-                          href="https://buy.stripe.com/7sIg1Udac6xZegodQR"
-                          target="_blank"
-                          className="underline font-bold"
-                        >
-                          Stripe.
-                        </a>
-                      </li>
-                      <li>
-                        {" "}
-                        - Recurring contributions via{" "}
-                        <a
-                          href="https://www.patreon.com/andcomputers"
-                          target="_blank"
-                          className="underline font-bold"
-                        >
-                          Patreon.
-                        </a>
-                      </li>
                     </ul>
                   </li>
                 </ul>

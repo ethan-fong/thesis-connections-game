@@ -1,0 +1,33 @@
+{
+    "title": "CSC108 Week 3 Connections",
+    "created_at": "2024-09-04T15:00:55.326394Z",
+    "author" : "fongetha",
+    "num_categories": 4,
+    "words_per_category": 4,
+    "game" : [
+        {
+          "category": "Names",
+          "words": ["adam", "bob", "charlie", "dave"],
+          "difficulty": 1,
+          "explanation": "these are all names"
+        },
+        {
+          "category": "jobs",
+          "words": ["chef", "Jordan", "Johnson", "Tyson"],
+          "difficulty": 2,
+          "explanation": "these are all jobs"
+        },
+        {
+          "category": "random",
+          "words": ["for i in range(5):\n\tpass", "Dove", "Ivy", "Pyramid"],
+          "difficulty": 3,
+          "explanation": "these are all c"
+        },
+        {
+          "category": "random 2",
+          "words": ["Michael", "Nathan", "Wanyá", "Shawn"],
+          "difficulty": 4,
+          "explanation": "these are all d"
+        }
+      ]
+}

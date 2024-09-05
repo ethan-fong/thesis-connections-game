@@ -48,3 +48,9 @@
   position: absolute;
   transition: opacity 0.4s ease;
 } */
+
+.wordText {
+  white-space: pre-wrap; /* Preserves newlines and tabs */
+  text-align: left;      /* Align text to the left */
+  display: block;        /* Ensure block-level behavior for alignment */
+}
