@@ -1,7 +1,4 @@
 {
-  "scripts:":{
-  "predeploy" : "npm run build",
-  "deploy" : "gh-pages -d build"},
   "homepage": "https://ethan-fong.github.io/thesis-connections-game",
   "dependencies": {
     "@radix-ui/react-accordion": "^1.1.2",
@@ -38,7 +35,9 @@
     "predev": "rimraf .parcel-cache dist",
     "dev": "parcel src/index.html",
     "build": "parcel build src/index.html",
-    "nc": "new-component"
+    "nc": "new-component",
+    "predeploy" : "npm run build",
+    "deploy" : "gh-pages -d build"
   },
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "devDependencies": {
