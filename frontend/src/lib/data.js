@@ -37,7 +37,7 @@ export const CONNECTION_GAMES = [
       category: "Countries in East Africa",
       words: ["Tanzania", "Kenya", "Ethiopia", "Somalia"],
       difficulty: 2,
-    },
+    }, 
     {
       category: "Countries in North Africa",
       words: ["Morocco", "Algeria", "Tunisia", "Libya"],
