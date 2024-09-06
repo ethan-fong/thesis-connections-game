@@ -24,6 +24,7 @@
     "react-confetti-explosion": "^2.1.2",
     "react-countdown": "^2.3.5",
     "react-dom": "18.2.0",
+    "react-router-dom": "^6.26.1",
     "react-spring": "^9.7.3",
     "rimraf": "5.0.1",
     "styled-components": "^6.1.0",
@@ -36,8 +37,8 @@
     "dev": "parcel src/index.html",
     "build": "parcel build src/index.html --public-url /thesis-connections-game/",
     "nc": "new-component",
-    "predeploy" : "npm run build",
-    "deploy" : "gh-pages -d dist"
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "devDependencies": {

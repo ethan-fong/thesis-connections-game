@@ -10,6 +10,7 @@ router.register(r'categories', CategoryViewSet)
 router.register(r'words', WordViewSet)
 router.register(r'getgame', GetgameViewSet, basename='connectionsjson')
 
+
 urlpatterns = [
     path('', include(router.urls)),  # Include router URLs
 ]

@@ -16,7 +16,7 @@ import ViewResultsModal from "../modals/ViewResultsModal";
 
 function Game() {
   const { gameData, categorySize, numCategories, error, loading } = React.useContext(PuzzleDataContext);
-  const { submittedGuesses, solvedGameData, isGameOver, isGameWon } =
+  const { submittedGuesses, solvedGameData, isGameOver, isGameWon, timeToGuess } =
     React.useContext(GameStatusContext);
   console.log("Context Values:", { gameData, categorySize, numCategories, error, loading });
 
@@ -29,9 +29,6 @@ function Game() {
       setShuffledRows(shuffledRows);
     }
   }, [gameData]); // Dependency on gameData
-  //const [shuffledRows, setShuffledRows] = React.useState(
-  //  shuffleGameData({ gameData })
-  //);
   const [isEndGameModalOpen, setisEndGameModalOpen] = React.useState(false);
   const [gridShake, setGridShake] = React.useState(false);
   const [showConfetti, setShowConfetti] = React.useState(false);
@@ -58,11 +55,39 @@ function Game() {
       return;
     }
     // extra delay for game won to allow confetti to show
+    console.log("ending game state", submittedGuesses, isGameWon, timeToGuess)
+
+    // Define a function to send the POST request
+    const sendPostRequest = async () => {
+      const endGameData = {
+        submittedGuesses: submittedGuesses,  // This is an array
+        isGameWon: isGameWon,                // This is a boolean
+        timeToGuess: timeToGuess            // This is an array
+      };
+      try {
+        const response = await fetch('/your-endpoint', { // Replace with your actual endpoint
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(endGameData)
+        });
+        
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        
+        console.log('End game data sent successfully');
+      } catch (error) {
+        console.error('Failed to send end game data:', error);
+      }
+    };
     const modalDelay = isGameWon ? 2000 : 250;
     const delayModalOpen = window.setTimeout(() => {
       setisEndGameModalOpen(true);
       //unmount confetti after modal opens
       setShowConfetti(false);
+      sendPostRequest();
     }, modalDelay);
 
     if (isGameWon) {
@@ -83,7 +108,7 @@ function Game() {
   if (!gameData) {
     return <div>No game data available</div>; // Show message if no data is available
   }
-  console.log("continuing");
+
   return (
     <>
       <h3 className="text-xl text-center mt-4">

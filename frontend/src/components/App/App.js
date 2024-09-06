@@ -1,4 +1,5 @@
 import React from "react";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from "../Header";
 import Game from "../Game";
 
@@ -8,16 +9,23 @@ import GameStatusProvider from "../../providers/GameStatusProvider";
 
 function App() {
   return (
-    <PuzzleDataProvider>
-      <GameStatusProvider>
-        <div className="wrapper">
-          <Toaster />
-          <Header />
-          <Game />
-        </div>
-      </GameStatusProvider>
-    </PuzzleDataProvider>
+    <Router>
+      <PuzzleDataProvider>
+        <GameStatusProvider>
+          <div className="wrapper">
+            <Header />
+            <Toaster />
+            <Game />
+            <Routes>
+              <Route path="/game/:gameId" element={<PuzzleDataProvider />} />
+              {/* Other routes */}
+            </Routes>
+          </div>
+        </GameStatusProvider>
+      </PuzzleDataProvider>
+    </Router>
   );
 }
+
 
 export default App;

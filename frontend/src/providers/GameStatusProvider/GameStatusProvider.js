@@ -15,94 +15,85 @@ function GameStatusProvider({ children }) {
   const { gameData } = React.useContext(PuzzleDataContext);
   const [submittedGuesses, setSubmittedGuesses] = React.useState([]);
   const [startTime, setStartTime] = React.useState(null); // Start time
-  const [timetoGuess, setTimeToGuess] = React.useState(null); // start time - cur time
+  const [timeToGuess, setTimeToGuess] = React.useState([]); // Array to track times for each guess
   const [solvedGameData, setSolvedGameData] = React.useState([]);
-  React.useEffect(() => {
-    if (!startTime) {
-      setStartTime(Date.now()); // Record the current timestamp
-    }
-  },[gameData]);
-  React.useEffect(() => {
-    console.log("game status provider");
-    // Create an async function to handle the async logic
-    const loadGameState = async () => {
-      const loadedState = await loadGameStateFromLocalStorage();
-      console.log("checking game state!", {
-        loadedState: loadedState,
-        gd1: gameData,
-        gd2: loadedState?.gameData,
-      });
-
-      // Check if game data is equivalent
-      if (!isGameDataEquivalent({ gd1: gameData, gd2: loadedState?.gameData })) {
-        setSolvedGameData([]); // If not equivalent, reset the solved data
-        return;
-      }
-
-      // Check if the guesses are from the same game
-      if (
-        !isGuessesFromGame({
-          gameData,
-          submittedGuesses: loadedState?.submittedGuesses,
-        })
-      ) {
-        setSolvedGameData([]); // If guesses are not from the same game, reset the solved data
-        return;
-      }
-
-      // Load submitted guesses if available
-      if (Array.isArray(loadedState?.submittedGuesses)) {
-        setSubmittedGuesses(loadedState.submittedGuesses);
-      }
-
-      // Load solved game data if available
-      if (Array.isArray(loadedState?.solvedGameData)) {
-        console.log("loaded gamestate", loadedState.solvedGameData);
-        setSolvedGameData(loadedState.solvedGameData);
-      } else {
-        setSolvedGameData([]); // If no solved data is found, reset it
-      }
-    };
-
-    loadGameState();
-  }, [GameStatusContext]);
-
   const [isGameOver, setIsGameOver] = React.useState(false);
   const [isGameWon, setIsGameWon] = React.useState(false);
   const [guessCandidate, setGuessCandidate] = React.useState([]);
 
+  // Set startTime once when the first guess is made
+  React.useEffect(() => {
+    if (!startTime && submittedGuesses.length === 0) {
+      setStartTime(Date.now()); // Set start time when the first guess is submitted
+      console.log("Start time recorded:", Date.now());
+    }
+  }, [submittedGuesses, startTime]);
+
   const numMistakesUsed = submittedGuesses.length - solvedGameData.length;
 
-  // use effect to check if game is won
+  // Use effect to check if the game is won
   React.useEffect(() => {
-    if (gameData){
+    if (gameData) {
       if (solvedGameData.length === gameData.length) {
         setIsGameOver(true);
         setIsGameWon(true);
       }
-      const gameState = { submittedGuesses, solvedGameData, gameData, startTime, timetoGuess };
-      console.log("line78", gameState);
+
+      // Append time to guess for each new guess
+      // if (startTime) {
+      //   const currentTime = Date.now();
+      //   const timeTakenForGuess = (currentTime - startTime) / 1000;
+
+      //   setTimeToGuess((prevTimes) => {
+      //     const updatedTimes = [...prevTimes, timeTakenForGuess]; // Create a new array with the updated times
+      //     console.log("Updated timeToGuess array:", updatedTimes); // Log after updating
+      //     return updatedTimes;
+      //   });
+      // }
+
+      const gameState = {
+        submittedGuesses,
+        solvedGameData,
+        gameData,
+        startTime,
+        timeToGuess, // This may not have the latest time in the current render cycle, use updatedTimes inside the setTimeToGuess function to see it immediately
+      };
+
+      console.log("Game state saved:", gameState);
       saveGameStateToLocalStorage(gameState);
     }
-  }, [solvedGameData]);
+  }, [solvedGameData, startTime]);
 
-  // use effect to check if all mistakes have been used and end the game accordingly
+  // Use effect to check if all mistakes have been used and end the game accordingly
   React.useEffect(() => {
-    if (gameData){
+    if (gameData && startTime) {
       if (numMistakesUsed >= MAX_MISTAKES) {
         setIsGameOver(true);
         setIsGameWon(false);
       }
-      setTimeToGuess(Date.now() - startTime); // Record the current timestamp
-      const gameState = { submittedGuesses, solvedGameData, gameData , startTime, timetoGuess};
-      console.log("stt", startTime);
-      console.log("ct", Date.now());
-      console.log("line91", gameState);
-      
+
+      const currentTime = Date.now();
+      const timeTakenForGuess = (currentTime - startTime) / 1000;
+
+      setTimeToGuess((prevTimes) => {
+        const updatedTimes = [...prevTimes, timeTakenForGuess]; // Create a new array with the updated times
+        console.log("Updated timeToGuess array:", updatedTimes); // Log after updating
+        return updatedTimes;
+      });
+
+      const gameState = {
+        submittedGuesses,
+        solvedGameData,
+        gameData,
+        startTime,
+        timeToGuess, // This may not have the latest time in the current render cycle
+      };
+
+      console.log("Current game state:", gameState);
       saveGameStateToLocalStorage(gameState);
     }
-  }, [submittedGuesses]);
-  //console.log("line95");
+  }, [submittedGuesses, startTime]);
+
   return (
     <GameStatusContext.Provider
       value={{
@@ -115,12 +106,12 @@ function GameStatusProvider({ children }) {
         setSubmittedGuesses,
         guessCandidate,
         setGuessCandidate,
-        startTime
+        startTime,
+        timeToGuess, // Expose array of times taken for each guess
       }}
     >
       {children}
     </GameStatusContext.Provider>
   );
 }
-
 export default GameStatusProvider;

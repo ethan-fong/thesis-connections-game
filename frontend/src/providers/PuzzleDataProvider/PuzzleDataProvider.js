@@ -1,8 +1,7 @@
 import React, { useState, useEffect, createContext } from 'react';
-import { puzzleAnswers } from "../../lib/time-utils";
-
+import { useParams } from 'react-router-dom';
 export const PuzzleDataContext = createContext('default_context');
-const JSON_URL = "http://127.0.0.1:8000/api/getgame/2/"
+const BASE_API = "http://127.0.0.1:8000/api/"
 const MAX_RETRIES = 3; // Number of retries
 // function PuzzleDataProvider({ children }) {
 //   const [gameData, setGameData] = React.useState(puzzleAnswers);
@@ -27,7 +26,8 @@ export default function PuzzleDataProvider({ children }) {
   const [numCategories, setNumCategories] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  const { gameId } = useParams();  // Extract gameId from URL
+  JSON_URL = `${BASE_API}getgame/${gameId}/`
   useEffect(() => {
     const fetchGameData = async (retries = MAX_RETRIES) => {
       try {
