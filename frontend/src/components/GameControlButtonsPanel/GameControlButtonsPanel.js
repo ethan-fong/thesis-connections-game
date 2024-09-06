@@ -33,6 +33,7 @@ function GameControlButtonsPanel({
   }
 
   function submitCandidateGuess() {
+    console.log("submitting guess");
     // check that its a valid guess by size
     if (guessCandidate.length !== categorySize) {
       return;

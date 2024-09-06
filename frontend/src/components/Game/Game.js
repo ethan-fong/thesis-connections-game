@@ -15,21 +15,32 @@ import GameControlButtonsPanel from "../GameControlButtonsPanel";
 import ViewResultsModal from "../modals/ViewResultsModal";
 
 function Game() {
-  const { gameData, categorySize, numCategories } =
-    React.useContext(PuzzleDataContext);
-  console.log("Context Values:", { gameData, categorySize, numCategories });
+  const { gameData, categorySize, numCategories, error, loading } = React.useContext(PuzzleDataContext);
   const { submittedGuesses, solvedGameData, isGameOver, isGameWon } =
     React.useContext(GameStatusContext);
+  console.log("Context Values:", { gameData, categorySize, numCategories, error, loading });
 
-  const [shuffledRows, setShuffledRows] = React.useState(
-    shuffleGameData({ gameData })
-  );
+  // Wait until gameData is available and then shuffle
+  const [shuffledRows, setShuffledRows] = React.useState([]); // Start as an empty array
+  React.useEffect(() => {
+    if (gameData && gameData.length > 0) {
+      // Shuffle game data once it's available
+      const shuffledRows = shuffleGameData({ gameData });
+      setShuffledRows(shuffledRows);
+    }
+  }, [gameData]); // Dependency on gameData
+  //const [shuffledRows, setShuffledRows] = React.useState(
+  //  shuffleGameData({ gameData })
+  //);
   const [isEndGameModalOpen, setisEndGameModalOpen] = React.useState(false);
   const [gridShake, setGridShake] = React.useState(false);
   const [showConfetti, setShowConfetti] = React.useState(false);
 
   // use effect to update Game Grid after a row has been correctly solved
   React.useEffect(() => {
+    if (!gameData){
+      return
+    }
     const categoriesToRemoveFromRows = solvedGameData.map(
       (data) => data.category
     );
@@ -60,7 +71,19 @@ function Game() {
 
     return () => window.clearTimeout(delayModalOpen);
   }, [isGameOver]);
+  if (loading) {
+    console.log("should be loading!")
+    return <div>Loading...</div>; // Show loading indicator while data is being fetched
+  }
 
+  if (error) {
+    return <div>Error: {error}</div>; // Show error message if data fetching fails
+  }
+
+  if (!gameData) {
+    return <div>No game data available</div>; // Show message if no data is available
+  }
+  console.log("continuing");
   return (
     <>
       <h3 className="text-xl text-center mt-4">

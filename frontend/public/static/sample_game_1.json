@@ -8,26 +8,30 @@
         {
           "category": "Python keywords",
           "words": ["and", "is", "assert", "not"],
+          "is_py_code" : [],
           "difficulty": 1,
-          "explanation": "these are all python keywords that have specific meanings in the language"
+          "explanation": "These are all python keywords that have specific meanings in the language"
         },
         {
           "category": "Python arithmetic operators",
           "words": ["+", "**", "-", "//"],
+          "is_py_code" : [],
           "difficulty": 2,
-          "explanation": "these are all python arithmetic operators that are used for mathematical operations"
+          "explanation": "These are all python arithmetic operators that are used for mathematical operations"
         },
         {
           "category": "Will raise an error in Python",
           "words": ["range(5,)", "Min(2, 2.5)", "MIN(2, 3)", "7 / / 3"],
+          "is_py_code" : ["range(5,)", "Min(2, 2.5)", "MIN(2, 3)", "7 / / 3"],
           "difficulty": 3,
           "explanation": "Range takes in either 1 or two values, but the second was not provided. Min and MIN are not valid due to capitalization. 7 / / 3 will raise an error due to the space between slashes."
         },
         {
           "category": "Python Statements that Evaluate to 2",
           "words": ["4//2", "8 % 3", "1 + 1", "min(2, 3)"],
+          "is_py_code" : ["4//2", "8 % 3", "1 + 1", "min(2, 3)"],
           "difficulty": 4,
-          "explanation": "if you run these statements in a python command line you will get 2!"
+          "explanation": "If you run these statements in a python command line you will get 2!"
         }
       ]
 }

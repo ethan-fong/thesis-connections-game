@@ -1,15 +1,27 @@
 import React from "react";
 
 import InfoModal from "../modals/InfoModal";
+import { PuzzleDataContext } from "../../providers/PuzzleDataProvider";
 import STATIC_GAME_HEADER from "../../../public/static/sample_game_1.json";
 
+const JSON_URL = "http://127.0.0.1:8000/api/getgame/2/"
+
+MAX_RETRIES = 3
+RETRY_DELAY = 2000
 function Header() {
-  const header_name = STATIC_GAME_HEADER.title;
-  const header_author = STATIC_GAME_HEADER.header_author;
-  console.log("header name", header_name)
+  const {title, loading, author} = React.useContext(PuzzleDataContext);
+  console.log("header name", title)
+  if (loading){
+    return (
+      <header>
+        <h1 className="font-space-mono">Loading...</h1>
+        <InfoModal />
+      </header>
+    );
+  }
   return (
     <header>
-      <h1 className="font-space-mono">{header_name}</h1>
+      <h1 className="font-space-mono">{title} by {author}</h1>
       <InfoModal />
     </header>
   );
