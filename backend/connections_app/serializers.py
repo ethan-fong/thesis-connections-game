@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import ConnectionsGame, Category, Word
+from .models import ConnectionsGame, Category, Word, Submission
 
 class WordSerializer(serializers.ModelSerializer):
     class Meta:
@@ -30,3 +30,8 @@ class ConnectionsGameSerializer(serializers.ModelSerializer):
     class Meta:
         model = ConnectionsGame
         fields = ['title', 'created_at', 'author', 'num_categories', 'words_per_category', 'game']
+
+class SubmissionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Submission
+        fields = ['game', 'guesses', 'time_taken', 'is_won']

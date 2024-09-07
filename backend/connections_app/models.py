@@ -18,3 +18,10 @@ class Category(models.Model):
 class Word(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='words')
     word = models.CharField(max_length=255)
+
+class Submission(models.Model):
+    game = models.ForeignKey(ConnectionsGame, on_delete=models.CASCADE)
+    guesses = models.JSONField()  # Store as JSON for easy storage of arrays
+    time_taken = models.JSONField()  # Store array of time taken for each guess
+    is_won = models.BooleanField(default=False)
+    submitted_at = models.DateTimeField(auto_now_add=True)

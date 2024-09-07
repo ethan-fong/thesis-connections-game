@@ -4,10 +4,9 @@ import InfoModal from "../modals/InfoModal";
 import { PuzzleDataContext } from "../../providers/PuzzleDataProvider";
 import STATIC_GAME_HEADER from "../../../public/static/sample_game_1.json";
 
-const JSON_URL = "http://127.0.0.1:8000/api/getgame/2/"
-
 MAX_RETRIES = 3
 RETRY_DELAY = 2000
+
 function Header() {
   const {title, loading, author} = React.useContext(PuzzleDataContext);
   console.log("header name", title)

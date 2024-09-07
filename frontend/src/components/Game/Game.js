@@ -11,14 +11,15 @@ import ConfettiExplosion from "react-confetti-explosion";
 import { PuzzleDataContext } from "../../providers/PuzzleDataProvider";
 import { GameStatusContext } from "../../providers/GameStatusProvider";
 import GameControlButtonsPanel from "../GameControlButtonsPanel";
-
 import ViewResultsModal from "../modals/ViewResultsModal";
 
+const BASE_API = "http://127.0.0.1:8000/api/"
+
 function Game() {
-  const { gameData, categorySize, numCategories, error, loading } = React.useContext(PuzzleDataContext);
+  const { gameData, categorySize, numCategories, error, loading, gameNumber } = React.useContext(PuzzleDataContext);
   const { submittedGuesses, solvedGameData, isGameOver, isGameWon, timeToGuess } =
     React.useContext(GameStatusContext);
-  console.log("Context Values:", { gameData, categorySize, numCategories, error, loading });
+  console.log("Context Values:", { gameData, categorySize, numCategories, error, loading, gameNumber });
 
   // Wait until gameData is available and then shuffle
   const [shuffledRows, setShuffledRows] = React.useState([]); // Start as an empty array
@@ -59,13 +60,19 @@ function Game() {
 
     // Define a function to send the POST request
     const sendPostRequest = async () => {
+      console.log("gamenumber", gameNumber);
       const endGameData = {
-        submittedGuesses: submittedGuesses,  // This is an array
-        isGameWon: isGameWon,                // This is a boolean
-        timeToGuess: timeToGuess            // This is an array
+        "gameId" : gameNumber,
+        "submittedGuesses" : submittedGuesses,  // This is an array
+        "isGameWon": isGameWon,                // This is a boolean
+        "timeToGuess": timeToGuess,            // This is an array
       };
+
       try {
-        const response = await fetch('/your-endpoint', { // Replace with your actual endpoint
+        API_COLLECT_URL = `${BASE_API}submit/`
+        console.log(API_COLLECT_URL);
+        console.log(JSON.stringify(endGameData));
+        const response = await fetch(API_COLLECT_URL, { // Replace with your actual endpoint
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -74,6 +81,7 @@ function Game() {
         });
         
         if (!response.ok) {
+          console.log(response);
           throw new Error('Network response was not ok');
         }
         

@@ -8,26 +8,30 @@
         {
           "category": "Names",
           "words": ["adam", "bob", "charlie", "dave"],
+          "is_py_code" : [],
           "difficulty": 1,
           "explanation": "these are all names"
         },
         {
           "category": "jobs",
-          "words": ["chef", "Jordan", "Johnson", "Tyson"],
+          "words": ["chef", "doctor", "engineer", "teacher"],
+          "is_py_code" : [],
           "difficulty": 2,
           "explanation": "these are all jobs"
         },
         {
-          "category": "random",
-          "words": ["for i in range(5):\n\tpass", "Dove", "Ivy", "Pyramid"],
+          "category": "python",
+          "words": ["for i in range(5):\n\tpass", "x += 2", "min(2,3)", "import time"],
+          "is_py_code" : ["for i in range(5):\n\tpass", "x += 2", "min(2,3)", "import time"],
           "difficulty": 3,
-          "explanation": "these are all c"
+          "explanation": "these are all python"
         },
         {
-          "category": "random 2",
-          "words": ["Michael", "Nathan", "Wanyá", "Shawn"],
+          "category": "numbers",
+          "words": ["1", "2", "3", "4"],
+          "is_py_code" : [],
           "difficulty": 4,
-          "explanation": "these are all d"
+          "explanation": "these are all numbers"
         }
       ]
 }

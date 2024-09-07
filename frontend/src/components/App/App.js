@@ -10,19 +10,19 @@ import GameStatusProvider from "../../providers/GameStatusProvider";
 function App() {
   return (
     <Router>
-      <PuzzleDataProvider>
-        <GameStatusProvider>
-          <div className="wrapper">
-            <Header />
-            <Toaster />
-            <Game />
-            <Routes>
-              <Route path="/game/:gameId" element={<PuzzleDataProvider />} />
-              {/* Other routes */}
-            </Routes>
-          </div>
-        </GameStatusProvider>
-      </PuzzleDataProvider>
+      <Routes>
+      <Route path="/game/:gameId" element={
+        <PuzzleDataProvider>
+          <GameStatusProvider>
+            <div className="wrapper">
+              <Header />
+              <Toaster />
+              <Game />
+            </div>
+          </GameStatusProvider>
+        </PuzzleDataProvider>
+      } />
+      </Routes>
     </Router>
   );
 }

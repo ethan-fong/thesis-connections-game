@@ -1,8 +1,11 @@
 import React, { useState, useEffect, createContext } from 'react';
 import { useParams } from 'react-router-dom';
+
 export const PuzzleDataContext = createContext('default_context');
+
 const BASE_API = "http://127.0.0.1:8000/api/"
 const MAX_RETRIES = 3; // Number of retries
+
 // function PuzzleDataProvider({ children }) {
 //   const [gameData, setGameData] = React.useState(puzzleAnswers);
 //   const categorySize = gameData[0].words.length;
@@ -20,16 +23,23 @@ const RETRY_DELAY = 2000;
 
 export default function PuzzleDataProvider({ children }) {
   const [gameData, setGameData] = useState(null);
-  const [title, setTitle] = React.useState(null);
-  const [author, setAuthor] = React.useState(null);
+  const [gameNumber, setGameNumber] = useState(null);
+  const [title, setTitle] = useState(null);
+  const [author, setAuthor] = useState(null);
   const [categorySize, setCategorySize] = useState(null);
   const [numCategories, setNumCategories] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const { gameId } = useParams();  // Extract gameId from URL
+
   JSON_URL = `${BASE_API}getgame/${gameId}/`
+
   useEffect(() => {
     const fetchGameData = async (retries = MAX_RETRIES) => {
+      if (!gameNumber){
+        console.log("setting game number to ", gameId);
+        setGameNumber(gameId)
+      }
       try {
         console.log('Fetching data...');
         const response = await fetch(JSON_URL);
@@ -61,7 +71,7 @@ export default function PuzzleDataProvider({ children }) {
 
 
   return (
-    <PuzzleDataContext.Provider value={{ gameData, categorySize, numCategories, error, loading, title, author }}>
+    <PuzzleDataContext.Provider value={{ gameData, categorySize, numCategories, error, loading, title, author, gameNumber}}>
       {children}
     </PuzzleDataContext.Provider>
   );
